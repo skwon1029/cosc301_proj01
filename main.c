@@ -73,11 +73,7 @@ void tokenify(const char *s, struct node **head) {
 
 void process_data(FILE *input_file) {
 	struct rusage usage;
-	struct timeval user_start, user_end, sys_start, sys_end;
-	
-	getrusage(RUSAGE_SELF, &usage);
-	user_start = usage.ru_utime;
-	sys_start = usage.ru_stime;
+	struct timeval user_end, sys_end;
 	
 	//assume each line contains less than or equal to 100 characters
 	char *line = malloc(101*sizeof(char));
@@ -101,10 +97,8 @@ void process_data(FILE *input_file) {
     sys_end = usage.ru_stime;
 	
 	//print out resource stat
-	printf("User time:\t%f\n", 
-	user_end.tv_sec + (user_end.tv_usec)/1000000. - user_start.tv_sec - (user_start.tv_usec)/1000000.);
-	printf("System time:\t%f\n",
-	sys_end.tv_sec + (sys_end.tv_usec)/1000000. - sys_start.tv_sec - (sys_start.tv_usec)/1000000.);
+	printf("User time:\t%f\n", user_end.tv_sec + (user_end.tv_usec)/1000000.);
+	printf("System time:\t%f\n", sys_end.tv_sec + (sys_end.tv_usec)/1000000.);
 }
 
 void usage(char *program) {
